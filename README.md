@@ -1,2 +1,2 @@
 # AutoClio
-Repositorio dedicado a armagenar e discutir ideias para melhorias e incrementações no carro usando eletrônica embarcada.
+Repositorio dedicado a armazenar e discutir ideias para melhorias e incrementações no carro usando eletrônica embarcada.
