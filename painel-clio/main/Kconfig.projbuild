@@ -1,0 +1,44 @@
+menu "Painel Clio"
+
+    config PAINEL_ELM_UART_TX
+        int "GPIO TX do ESP -> RX do ELM327"
+        default 17
+        help
+            GPIO17 esta no conector P5 (SH1.0 4 pinos: GND, 3V3, IO17, IO18).
+
+    config PAINEL_ELM_UART_RX
+        int "GPIO RX do ESP <- TX do ELM327"
+        default 11
+        help
+            GPIO11 esta no conector P2 (pino 2). Nao use o GPIO18 sem antes
+            remover o R17 (0 ohm): ele esta ligado ao INT do touch GT911.
+            Deixe o slot do cartao SD vazio (o IO11 tambem vai para ele).
+
+    config PAINEL_ELM_BAUD
+        int "Baud rate da serial do ELM327"
+        default 38400
+
+    config PAINEL_IGN_SENSE_GPIO
+        int "GPIO que le o pos-chave (15/54) via divisor/opto; -1 = nao usado"
+        default -1
+
+    config PAINEL_POWER_HOLD_GPIO
+        int "GPIO que segura a alimentacao depois de desligar a chave; -1 = nao usado"
+        default -1
+
+    config PAINEL_LCD_PCLK_HZ
+        int "Clock de pixel da tela (Hz)"
+        default 14000000
+        help
+            O exemplo do fabricante usa 16 MHz. 12-14 MHz costuma eliminar
+            tremido quando a PSRAM esta ocupada.
+
+    config PAINEL_TOUCH_MIRROR_X
+        bool "Espelhar o touch no eixo X"
+        default n
+
+    config PAINEL_TOUCH_MIRROR_Y
+        bool "Espelhar o touch no eixo Y"
+        default n
+
+endmenu

@@ -1,0 +1,62 @@
+menu "Ponte OBD Bluetooth"
+
+    config PONTE_ELM_MAC
+        string "MAC do ELM327 (vazio = procurar pelo nome)"
+        default ""
+        help
+            Ex.: AA:BB:CC:DD:EE:FF. Aparece no celular/PC em Bluetooth ou no
+            Car Scanner. Com o MAC a conexao e mais rapida e nao pega o ELM
+            de outro carro por engano.
+
+    config PONTE_ELM_NAMES
+        string "Nomes aceitos na busca (separados por virgula)"
+        default "OBD,ELM,V-LINK,VLINK,VGATE"
+        help
+            Comparacao sem diferenciar maiusculas e por trecho do nome.
+            Usado so quando o MAC esta vazio. O endereco encontrado fica salvo
+            na flash e e usado direto nas proximas vezes.
+
+    config PONTE_ELM_PINS
+        string "PINs a tentar, em ordem (separados por virgula)"
+        default "1234,0000,12345,6789,1111"
+        help
+            Se o pareamento falhar, a proxima tentativa usa o proximo PIN.
+            Depois de parear, o ESP32 guarda a chave e nao pede PIN de novo.
+
+    config PONTE_SPP_CHANNEL
+        int "Canal RFCOMM fixo (0 = descobrir por SDP)"
+        default 0
+        help
+            Quase todo ELM327 usa o canal 1. Se a descoberta SDP falhar a
+            ponte tenta o canal 1 sozinha.
+
+    config PONTE_UART_TX
+        int "GPIO TX da ponte -> RX do painel"
+        default 17
+
+    config PONTE_UART_RX
+        int "GPIO RX da ponte <- TX do painel"
+        default 16
+
+    config PONTE_UART_BAUD
+        int "Baud rate com o painel (igual ao CONFIG_PAINEL_ELM_BAUD do painel)"
+        default 38400
+
+    config PONTE_LED_GPIO
+        int "GPIO do LED de estado (-1 = nenhum)"
+        default 2
+        help
+            Pisca rapido: procurando o ELM. Aceso: conectado.
+
+    config PONTE_LINK_GPIO
+        int "GPIO de saida 'ponte conectada' para o painel (-1 = nenhum)"
+        default -1
+        help
+            Opcional. Nivel 1 quando o Bluetooth com o ELM esta aberto.
+            O firmware atual do painel nao precisa dele.
+
+    config PONTE_LOG_TRAFFIC
+        bool "Mostrar o trafego no monitor USB (debug)"
+        default n
+
+endmenu
